@@ -1,0 +1,108 @@
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Item} from '../models/Item';
+import {Coin} from '../models/Coin';
+import {ProductsService} from '../services/products.service';
+import {CoinsService} from '../services/coins.service';
+import {NgForm} from '@angular/forms';
+
+@Component({
+  selector: 'app-tab2',
+  templateUrl: 'tab2.page.html',
+  styleUrls: ['tab2.page.scss']
+})
+export class Tab2Page {
+    items: Item[];
+    coins: Coin[];
+    selectedItemName: string;
+    selectedItem: Item;
+    fiftyCent = null;
+    oneRand = null;
+    twoRand = null;
+    fiveRand = null;
+    credit: number;
+
+    constructor(private prodService: ProductsService, private coinService: CoinsService) {
+        const scope = this;
+        this.prodService.getAll().subscribe(res => {
+                scope.items = res;
+            }
+        );
+
+        this.coinService.getAll().subscribe(res => {
+                scope.coins = res;
+            }
+        );
+    }
+/*
+    ngOnInit() {
+        this.prodService.getAll().subscribe(res => {
+                this.items = res;
+            }
+        );
+
+        this.coinService.getAll().subscribe(res => {
+                this.coins = res;
+            }
+        );
+    }*/
+    buyItem(buyForm) {
+        this.credit = (this.fiftyCent * 0.5) + (this.oneRand * 1) + (this.twoRand * 2) + (this.fiveRand * 5);
+        this.selectedItem = this.items.find(x => x.name === this.selectedItemName);
+        alert('You have selected to buy ' + this.selectedItem.name + ' for R' + this.selectedItem.price);
+        if (this.credit < (this.selectedItem.price)) {
+            alert('Credit of ' + this.credit + ' less than price of R' + this.selectedItem.price);
+        }
+        const cnt = this.selectedItem.count - 1;
+
+        switch (this.selectedItemName) {
+            case 'Chips' : this.prodService.updateChips(cnt);
+                    break;
+            case    'Coke': this.prodService.updateCoke(cnt);
+                break;
+            case    'Lunch Bar': this.prodService.updateLunchBar(cnt);
+                break;
+            default:
+                console.log('Errors');
+        }
+        const coinAddFifty = this.coins[0].count + this.fiftyCent;
+        const coinAddFive = this.coins[1].count + this.fiveRand;
+        const coinAddOne = this.coins[2].count + this.oneRand;
+        const coinAddTwo = this.coins[3].count + this.twoRand;
+        this.coinService.updateFifty(coinAddFifty);
+        this.coinService.updateFive(coinAddFive);
+        this.coinService.updateOne(coinAddOne);
+        this.coinService.updateTwo(coinAddTwo);
+
+        const change = this.credit - this.selectedItem.price;
+        this.giveChange(change, this.credit);
+    }
+
+    giveChange(change: number, credit: number) {
+        /*const coinAddFifty = this.coins[0].count - this.fiftyCent;
+        const coinAddFive = this.coins[1].count - this.fiveRand;
+        const coinAddOne = this.coins[2].count - this.oneRand;
+        const coinAddTwo = this.coins[3].count - this.twoRand;
+        this.coinService.updateFifty(coinAddFifty);
+        this.coinService.updateFive(coinAddFive);
+        this.coinService.updateOne(coinAddOne);
+        this.coinService.updateTwo(coinAddTwo);*/
+        alert('You inserted ' + credit + ', your change is R' + change);
+    }
+
+    isFormValid(): boolean {
+         return this.selectedItemName != null
+    }
+
+
+    refreshCoins(event) {
+        /*this.coinService.getAll().subscribe(res => this.coins = res);
+        event.target.complete();*/
+        setTimeout(() => {
+            this.coinService.getAll().subscribe(res => this.coins = res);
+            event.target.complete();
+
+
+        }, 2000);
+
+    }
+} 

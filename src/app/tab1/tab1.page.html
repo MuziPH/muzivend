@@ -1,74 +1,80 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Vending Machine Status
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>
+            Vending Machine Status
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Item List</ion-card-title>
-    </ion-card-header>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>Item List</ion-card-title>
+        </ion-card-header>
 
-    <ion-card-content>
-        <div>
-        <mat-table #table [dataSource]="rows" class="mat-elevation-z8">
+        <ion-card-content>
+            <div>
+                <mat-table #table [dataSource]="rows" class="mat-elevation-z8">
 
-          <ng-container  matColumnDef="Item">
-            <mat-header-cell *matHeaderCellDef>Item</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
-          </ng-container>
+                    <ng-container matColumnDef="Item">
+                        <mat-header-cell *matHeaderCellDef>Item</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+                    </ng-container>
 
-          <ng-container  matColumnDef="Price">
-            <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.price}}</mat-cell>
-          </ng-container>
+                    <ng-container matColumnDef="Price">
+                        <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.price}}</mat-cell>
+                    </ng-container>
 
-          <ng-container  matColumnDef="Count">
-            <mat-header-cell *matHeaderCellDef>Count</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.count}}</mat-cell>
-          </ng-container>
+                    <ng-container matColumnDef="Count">
+                        <mat-header-cell *matHeaderCellDef>Count</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.count}}</mat-cell>
+                    </ng-container>
 
-          <mat-header-row *matHeaderRowDef="itemColumns"></mat-header-row>
-          <mat-row *matRowDef="let element; columns: itemColumns;"></mat-row>
+                    <mat-header-row *matHeaderRowDef="itemColumns"></mat-header-row>
+                    <mat-row *matRowDef="let element; columns: itemColumns;"></mat-row>
 
-        </mat-table>
-      </div>
-    </ion-card-content>
-  </ion-card>
+                </mat-table>
+            </div>
+            <ion-button (click)="refreshProducts()">Refresh Products</ion-button>
+        </ion-card-content>
+    </ion-card>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Coin List</ion-card-title>
-    </ion-card-header>
 
-    <ion-card-content>
-      <div>
-        <mat-table #table [dataSource]="coins" class="mat-elevation-z8">
+<ion-card>
+                <ion-refresher (ionRefresh)="refreshCoins($event)">
+                    <ion-refresher-content
+                            pullingIcon="arrow-dropdown"
+                            pullingText="Pull to refresh"
+                            refreshingSpinner="circles"
+                            refreshingText="Refreshing...">
+                    </ion-refresher-content>
+                    <ion-card-header>Coin List</ion-card-header>
 
-          <ng-container  matColumnDef="Denomination">
-            <mat-header-cell *matHeaderCellDef>Denomination</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.denomination}}</mat-cell>
-          </ng-container>
+                </ion-refresher>
 
-          <ng-container  matColumnDef="Value">
-            <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.value}}</mat-cell>
-          </ng-container>
+                    <mat-table #table [dataSource]="coins" class="mat-elevation-z8">
 
-          <ng-container  matColumnDef="Count">
-            <mat-header-cell *matHeaderCellDef>Count</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.count}}</mat-cell>
-          </ng-container>
+                        <ng-container matColumnDef="Denomination">
+                            <mat-header-cell *matHeaderCellDef>Denomination</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.denomination}}</mat-cell>
+                        </ng-container>
 
-          <mat-header-row *matHeaderRowDef="coinColumns"></mat-header-row>
-          <mat-row *matRowDef="let element; columns: coinColumns;"></mat-row>
+                        <ng-container matColumnDef="Value">
+                            <mat-header-cell *matHeaderCellDef>Value</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.value}}</mat-cell>
+                        </ng-container>
 
-        </mat-table>
-      </div>
-    </ion-card-content>
-  </ion-card>
+                        <ng-container matColumnDef="Count">
+                            <mat-header-cell *matHeaderCellDef>Count</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.count}}</mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="coinColumns"></mat-header-row>
+                        <mat-row *matRowDef="let element; columns: coinColumns;"></mat-row>
+
+                    </mat-table>
+</ion-card>
+
 
 </ion-content>

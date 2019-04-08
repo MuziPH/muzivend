@@ -1,9 +1,72 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab Two
+      Purchase Item
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-refresher (ionRefresh)="refreshCoins($event)">
+    <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+    <ion-card>
+      <ion-item>
+        <ion-label position="floating">Item</ion-label>
+        <ion-select [(ngModel)]="selectedItemName" okText="Okay" cancelText="Dismiss"
+                    placeholder="Select Item" name="name" required="true">
+          <ion-select-option value='Chips'>Chips</ion-select-option>
+          <ion-select-option value='Coke'>Coke</ion-select-option>
+          <ion-select-option value='Lunch Bar'>Lunch Bar</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-card>
+  <form #buyForm="ngForm" (ngSubmit)="buyItem(buyForm)" >
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Insert Coins</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">50c</ion-label>
+          <ion-input type="number" [(ngModel)]="fiftyCent" name="Start_Kilos"
+                     required="true"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">R1</ion-label>
+          <ion-input type="number" [(ngModel)]="oneRand" name="End_Kilos"
+                     required="true"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">R2</ion-label>
+          <ion-input type="number" [(ngModel)]="twoRand" name="Diesel"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">R5</ion-label>
+          <ion-input type="number" [(ngModel)]="fiveRand" name="Notable_Travel"></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-button (click)="buyItem()" [disabled]="!isFormValid()">Click to Buy</ion-button>
+  </form>
+
+<ion-card>
+  <ion-button (click)="returnCoins()">Return Coins</ion-button>
+   <ion-list *ngFor="let item of insertedCoins | keyvalue">
+     <ion-item *ngIf="!returnCoin">
+       <ion-label>{{item.key}}</ion-label>
+       {{item.value}}
+     </ion-item>
+   </ion-list>
+</ion-card>
+</ion-content>

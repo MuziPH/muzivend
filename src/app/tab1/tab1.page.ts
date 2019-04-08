@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Item} from '../models/Item';
 import {ProductsService} from '../services/products.service';
-import {MatTableDataSource} from '@angular/material';
 import {Coin} from '../models/Coin';
 import {CoinsService} from '../services/coins.service';
+import {IonRefresher, LoadingController} from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -16,19 +16,49 @@ export class Tab1Page implements OnInit {
     coinColumns: string[] = ['Denomination', 'Value', 'Count'];
     coins: Coin[];
 
-  constructor(private prodService: ProductsService, private coinService: CoinsService) {}
+  constructor(private prodService: ProductsService, private coinService: CoinsService, public loading: LoadingController) {
+      this.presentLoading();
+      this.prodService.getAll().subscribe(res => {
+              this.rows = res;
+          }
+      );
+
+      this.coinService.getAll().subscribe(res => {
+              this.coins = res;
+          }
+      );
+  }
 
   ngOnInit() {
+      /*this.presentLoading();
     this.prodService.getAll().subscribe(res => {
       this.rows = res;
-      console.log(this.rows);
         }
     );
 
       this.coinService.getAll().subscribe(res => {
               this.coins = res;
-              console.log(this.coins);
           }
-      );
+      );*/
   }
+
+    refreshProducts() {
+        this.prodService.getAll().subscribe(res => {
+                this.rows = res;
+            }
+        );
+    }
+
+   refreshCoins(event) {
+          this.coinService.getAll().subscribe(res => this.coins = res);
+           event.target.complete();
+   }
+
+    async presentLoading() {
+        const loading = await this.loading.create({
+            message: 'Loading your data...',
+            duration: 1000
+        });
+        await loading.present();
+    }
 }

@@ -14,6 +14,7 @@ import {environment} from '../environments/environment';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import {MatTableDataSource, MatTableModule} from '@angular/material';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import {MatTableDataSource, MatTableModule} from '@angular/material';
             AngularFireModule.initializeApp(environment.firebase, 'muzivend'),
             AngularFirestoreModule,
             MatTableModule,
+            FormsModule
     ],
   providers: [
     StatusBar,

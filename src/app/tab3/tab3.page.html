@@ -1,9 +1,65 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab Three
+      Service Machine
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Add Items</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Chips</ion-label>
+          <ion-input type="number" [(ngModel)]="chipsCount"
+                     required="true"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Coke</ion-label>
+          <ion-input type="number" [(ngModel)]="cokeCount"
+                     required="true"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Lunch Bar</ion-label>
+          <ion-input type="number" [(ngModel)]="lunchbarCount"></ion-input>
+        </ion-item>
+          <ion-button type="submit" (click)="addItems()">Load Items</ion-button>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Insert Coins</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">50c</ion-label>
+          <ion-input type="number" [(ngModel)]="fiftyCentCount"
+                     required="true"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">R1</ion-label>
+          <ion-input type="number" [(ngModel)]="oneRandCount"
+                     required="true"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">R2</ion-label>
+          <ion-input type="number" [(ngModel)]="twoRandCount" ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">R5</ion-label>
+          <ion-input type="number" [(ngModel)]="fiveRandCount" ></ion-input>
+        </ion-item>
+        <ion-button type="submit" (click)="loadCoins()">Load Coins</ion-button>
+      </ion-card-content>
+    </ion-card>
+</ion-content>
