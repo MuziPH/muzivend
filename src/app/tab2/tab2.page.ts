@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, DoCheck, OnInit, ViewChild} from '@angular/core';
 import {Item} from '../models/Item';
 import {Coin} from '../models/Coin';
 import {ProductsService} from '../services/products.service';
@@ -7,11 +7,15 @@ import {Router} from '@angular/router';
 import {AlertController, LoadingController} from '@ionic/angular';
 
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+    selector: 'app-tab2',
+    templateUrl: 'tab2.page.html',
+    styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page implements OnInit {
+export class Tab2Page implements OnInit, AfterViewInit, AfterViewChecked, DoCheck, AfterContentInit, AfterContentChecked  {
+
+    constructor(private prodService: ProductsService, private coinService: CoinsService, public router: Router,
+                private alert: AlertController, public loading: LoadingController) {
+    }
     items: Item[];
     coins: Coin[];
     insertedCoins = new Map();
@@ -23,10 +27,6 @@ export class Tab2Page implements OnInit {
     fiveRand = null;
     credit: number;
     returnCoin = true;
-
-    constructor(private prodService: ProductsService, private coinService: CoinsService, public router: Router,
-                private alert: AlertController, public loading: LoadingController) {
-    }
 
     ngOnInit() {
         this.prodService.getAll().subscribe(res => {
@@ -40,6 +40,42 @@ export class Tab2Page implements OnInit {
         );
     }
 
+    ngDoCheck() {
+        console.log('ngDoCheck');
+        this.prodService.getAll().subscribe(res => {
+                this.items = res;
+            }
+        );
+    }
+    ngAfterContentInit() {
+        console.log('ngAfterContentInit');
+        this.prodService.getAll().subscribe(res => {
+                this.items = res;
+            }
+        );
+    }
+    ngAfterContentChecked() {
+        console.log('ngAfterContentChecked');
+        this.prodService.getAll().subscribe(res => {
+                this.items = res;
+            }
+        );
+    }
+    ngAfterViewInit() {
+        console.log('ngAfterViewInit');
+        this.prodService.getAll().subscribe(res => {
+                this.items = res;
+            }
+        );
+    }
+    ngAfterViewChecked() {
+        console.log('ngAfterViewChecked');
+        this.prodService.getAll().subscribe(res => {
+                this.items = res;
+            }
+        );
+    }
+
     buyItem() {
         this.credit = (this.fiftyCent * 0.5) + (this.oneRand * 1) + (this.twoRand * 2) + (this.fiveRand * 5);
         this.insertedCoins.set('50c Coin', this.fiftyCent);
@@ -48,6 +84,7 @@ export class Tab2Page implements OnInit {
         this.insertedCoins.set('R5 Coin', this.fiveRand),
 
             this.selectedItem = this.items.find(x => x.name === this.selectedItemName);
+        console.log(this.selectedItem);
         alert('You have selected to buy ' + this.selectedItem.name + ' for R' + this.selectedItem.price);
 
         if (this.credit < (this.selectedItem.price)) {
@@ -61,14 +98,14 @@ export class Tab2Page implements OnInit {
         }
         const cnt = this.selectedItem.count - 1;
 
-        switch (this.selectedItemName) {
+        switch (this.selectedItemName.trim()) {
             case 'Chips' :
                 this.prodService.updateChips(cnt);
                 break;
-            case    'Coke':
+            case 'Coke' :
                 this.prodService.updateCoke(cnt);
                 break;
-            case    'Lunch Bar':
+            case 'Lunch Bar' :
                 this.prodService.updateLunchBar(cnt);
                 break;
             default:
@@ -122,5 +159,9 @@ export class Tab2Page implements OnInit {
             duration: 1000
         });
         await loading.present();
+    }
+
+    refreshCoins() {
+
     }
 }
