@@ -7,7 +7,6 @@ import {
     DoCheck,
     OnDestroy,
     OnInit,
-    ViewChild
 } from '@angular/core';
 import {Item} from '../models/Item';
 import {Coin} from '../models/Coin';
@@ -24,7 +23,7 @@ import {AlertController, LoadingController} from '@ionic/angular';
 export class Tab2Page implements OnInit, AfterViewInit, AfterViewChecked, DoCheck, AfterContentInit, AfterContentChecked, OnDestroy  {
 
     constructor(private prodService: ProductsService, private coinService: CoinsService, public router: Router,
-                private alert: AlertController, public loading: LoadingController, public location: Location) {
+                private alert: AlertController, public loading: LoadingController) {
     }
     items: Item[];
     coins: Coin[];
@@ -49,7 +48,6 @@ export class Tab2Page implements OnInit, AfterViewInit, AfterViewChecked, DoChec
             }
         );
 
-        this.location.replace('/tabs/tab2');
     }
 
 
@@ -179,9 +177,5 @@ export class Tab2Page implements OnInit, AfterViewInit, AfterViewChecked, DoChec
             duration: 1000
         });
         await loading.present();
-    }
-
-    refreshCoins() {
-
     }
 }
