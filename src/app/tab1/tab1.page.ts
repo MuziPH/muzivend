@@ -1,4 +1,14 @@
-import {AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, DoCheck, OnInit, ViewChild} from '@angular/core';
+import {
+    AfterContentChecked,
+    AfterContentInit,
+    AfterViewChecked,
+    AfterViewInit,
+    Component,
+    DoCheck,
+    OnDestroy,
+    OnInit,
+    ViewChild
+} from '@angular/core';
 import {Item} from '../models/Item';
 import {ProductsService} from '../services/products.service';
 import {Coin} from '../models/Coin';
@@ -10,7 +20,7 @@ import {IonRefresher, LoadingController} from '@ionic/angular';
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page implements OnInit, AfterViewInit, AfterViewChecked, DoCheck, AfterContentInit, AfterContentChecked  {
+export class Tab1Page implements OnInit, AfterViewInit, AfterViewChecked, DoCheck, AfterContentInit, AfterContentChecked, OnDestroy  {
   itemColumns: string[] = ['Item', 'Price', 'Count'];
     rows: Item[];
     coinColumns: string[] = ['Denomination', 'Value', 'Count'];
@@ -74,7 +84,9 @@ export class Tab1Page implements OnInit, AfterViewInit, AfterViewChecked, DoChec
         );
     }
 
-
+    ngOnDestroy() {
+        console.log('ngOnDestroy');
+    }
 
    refreshCoins(event) {
          this.ngAfterViewChecked();

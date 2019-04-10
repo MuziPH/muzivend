@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-refresher (ionRefresh)="refreshCoins($event)">
+  <ion-refresher (ionRefresh)="ngAfterViewChecked()">
     <ion-refresher-content
             pullingIcon="arrow-dropdown"
             pullingText="Pull to refresh"

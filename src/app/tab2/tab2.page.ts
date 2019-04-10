@@ -1,4 +1,14 @@
-import {AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, DoCheck, OnInit, ViewChild} from '@angular/core';
+import {
+    AfterContentChecked,
+    AfterContentInit,
+    AfterViewChecked,
+    AfterViewInit,
+    Component,
+    DoCheck,
+    OnDestroy,
+    OnInit,
+    ViewChild
+} from '@angular/core';
 import {Item} from '../models/Item';
 import {Coin} from '../models/Coin';
 import {ProductsService} from '../services/products.service';
@@ -11,10 +21,10 @@ import {AlertController, LoadingController} from '@ionic/angular';
     templateUrl: 'tab2.page.html',
     styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page implements OnInit, AfterViewInit, AfterViewChecked, DoCheck, AfterContentInit, AfterContentChecked  {
+export class Tab2Page implements OnInit, AfterViewInit, AfterViewChecked, DoCheck, AfterContentInit, AfterContentChecked, OnDestroy  {
 
     constructor(private prodService: ProductsService, private coinService: CoinsService, public router: Router,
-                private alert: AlertController, public loading: LoadingController) {
+                private alert: AlertController, public loading: LoadingController, public location: Location) {
     }
     items: Item[];
     coins: Coin[];
@@ -38,8 +48,12 @@ export class Tab2Page implements OnInit, AfterViewInit, AfterViewChecked, DoChec
                 this.coins = res;
             }
         );
+
+        this.location.replace('/tabs/tab2');
     }
 
+
+    // Incomplete attempts for refresh
     ngDoCheck() {
         console.log('ngDoCheck');
         this.prodService.getAll().subscribe(res => {
@@ -76,6 +90,11 @@ export class Tab2Page implements OnInit, AfterViewInit, AfterViewChecked, DoChec
         );
     }
 
+    ngOnDestroy() {
+        console.log('ngOnDestroy');
+    }
+
+    // Logic to handle purchase
     buyItem() {
         this.credit = (this.fiftyCent * 0.5) + (this.oneRand * 1) + (this.twoRand * 2) + (this.fiveRand * 5);
         this.insertedCoins.set('50c Coin', this.fiftyCent);
@@ -123,6 +142,7 @@ export class Tab2Page implements OnInit, AfterViewInit, AfterViewChecked, DoChec
         this.resetCoins();
     }
 
+    // front end form validation
     isFormValid(): boolean {
         return this.selectedItemName != null;
     }
