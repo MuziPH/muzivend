@@ -1,29 +1,21 @@
-import {
-    AfterContentChecked,
-    AfterContentInit,
-    AfterViewChecked,
-    AfterViewInit,
-    Component,
-    DoCheck,
-    OnDestroy,
-    OnInit,
-} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Item} from '../models/Item';
 import {Coin} from '../models/Coin';
 import {ProductsService} from '../services/products.service';
 import {CoinsService} from '../services/coins.service';
 import {Router} from '@angular/router';
 import {AlertController, LoadingController} from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
     selector: 'app-tab2',
     templateUrl: 'tab2.page.html',
     styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page implements OnInit, AfterViewInit, AfterViewChecked, DoCheck, AfterContentInit, AfterContentChecked, OnDestroy  {
+export class Tab2Page implements OnInit {
 
     constructor(private prodService: ProductsService, private coinService: CoinsService, public router: Router,
-                private alert: AlertController, public loading: LoadingController) {
+                private alert: AlertController, public loading: LoadingController, private storage: Storage) {
     }
     items: Item[];
     coins: Coin[];
@@ -38,58 +30,10 @@ export class Tab2Page implements OnInit, AfterViewInit, AfterViewChecked, DoChec
     returnCoin = true;
 
     ngOnInit() {
-        this.prodService.getAll().subscribe(res => {
-                this.items = res;
-            }
-        );
+        this.storage.get('prods').then(prods => this.items = prods);
 
-        this.coinService.getAll().subscribe(res => {
-                this.coins = res;
-            }
-        );
+       this.storage.get('coins').then(coins => this.coins = coins);
 
-    }
-
-
-    // Incomplete attempts for refresh
-    ngDoCheck() {
-        console.log('ngDoCheck');
-        this.prodService.getAll().subscribe(res => {
-                this.items = res;
-            }
-        );
-    }
-    ngAfterContentInit() {
-        console.log('ngAfterContentInit');
-        this.prodService.getAll().subscribe(res => {
-                this.items = res;
-            }
-        );
-    }
-    ngAfterContentChecked() {
-        console.log('ngAfterContentChecked');
-        this.prodService.getAll().subscribe(res => {
-                this.items = res;
-            }
-        );
-    }
-    ngAfterViewInit() {
-        console.log('ngAfterViewInit');
-        this.prodService.getAll().subscribe(res => {
-                this.items = res;
-            }
-        );
-    }
-    ngAfterViewChecked() {
-        console.log('ngAfterViewChecked');
-        this.prodService.getAll().subscribe(res => {
-                this.items = res;
-            }
-        );
-    }
-
-    ngOnDestroy() {
-        console.log('ngOnDestroy');
     }
 
     // Logic to handle purchase

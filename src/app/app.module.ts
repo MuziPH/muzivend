@@ -13,8 +13,9 @@ import { AngularFireModule } from 'angularfire2';
 import {environment} from '../environments/environment';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 
-import {MatTableDataSource, MatTableModule} from '@angular/material';
+import { MatTableModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
+import { IonicStorageModule, Storage } from '@ionic/storage';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,12 +26,14 @@ import {FormsModule} from '@angular/forms';
             AngularFireModule.initializeApp(environment.firebase, 'muzivend'),
             AngularFirestoreModule,
             MatTableModule,
-            FormsModule
+            FormsModule,
+      IonicModule.forRoot(),
+            IonicStorageModule.forRoot()
     ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],
   bootstrap: [AppComponent],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

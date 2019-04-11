@@ -41,40 +41,32 @@
     </ion-card>
 
 
-<ion-card>
-                <ion-refresher (ionRefresh)="refreshCoins($event)">
-                    <ion-refresher-content
-                            pullingIcon="arrow-dropdown"
-                            pullingText="Pull to refresh"
-                            refreshingSpinner="circles"
-                            refreshingText="Refreshing...">
-                    </ion-refresher-content>
-                    <ion-card-header>Coin List</ion-card-header>
+    <ion-card>
 
-                </ion-refresher>
 
-                    <mat-table #table [dataSource]="coins" class="mat-elevation-z8">
+        <mat-table #table [dataSource]="coins" class="mat-elevation-z8">
 
-                        <ng-container matColumnDef="Denomination">
-                            <mat-header-cell *matHeaderCellDef>Denomination</mat-header-cell>
-                            <mat-cell *matCellDef="let element">{{element.denomination}}</mat-cell>
-                        </ng-container>
+            <ng-container matColumnDef="Denomination">
+                <mat-header-cell *matHeaderCellDef>Denomination</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.denomination}}</mat-cell>
+            </ng-container>
 
-                        <ng-container matColumnDef="Value">
-                            <mat-header-cell *matHeaderCellDef>Value</mat-header-cell>
-                            <mat-cell *matCellDef="let element">{{element.value}}</mat-cell>
-                        </ng-container>
+            <ng-container matColumnDef="Value">
+                <mat-header-cell *matHeaderCellDef>Value</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.value}}</mat-cell>
+            </ng-container>
 
-                        <ng-container matColumnDef="Count">
-                            <mat-header-cell *matHeaderCellDef>Count</mat-header-cell>
-                            <mat-cell *matCellDef="let element">{{element.count}}</mat-cell>
-                        </ng-container>
+            <ng-container matColumnDef="Count">
+                <mat-header-cell *matHeaderCellDef>Count</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.count}}</mat-cell>
+            </ng-container>
 
-                        <mat-header-row *matHeaderRowDef="coinColumns"></mat-header-row>
-                        <mat-row *matRowDef="let element; columns: coinColumns;"></mat-row>
+            <mat-header-row *matHeaderRowDef="coinColumns"></mat-header-row>
+            <mat-row *matRowDef="let element; columns: coinColumns;"></mat-row>
 
-                    </mat-table>
-</ion-card>
+        </mat-table>
+        <ion-button (click)="refreshCoins()">Refresh Coins</ion-button>
+    </ion-card>
 
 
 </ion-content>
