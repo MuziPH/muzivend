@@ -15,6 +15,6 @@ jobs:
         command: npm test
     - run:
         name: Building android // building platform android to generate apk file
-        command: ionic cordova build android
+        command: docker build -t ionic-app; docker login -u username -p password dockerhub.io; docker push ionic-app
     - store_artifacts:
         path: platforms/android/build/outputs/apk/android-debug.apk // storing the apk file in artifact to download and share with testing team
