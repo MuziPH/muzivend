@@ -1,10 +1,6 @@
 steps:
-# Install
-- name: 'gcr.io/cloud-builders/npm'
-  args: ['install']
-# Build
-- name: 'gcr.io/cloud-builders/npm'
-  args: ['run', 'build']
-# Deploy
-- name: 'gcr.io/$PROJECT_ID/firebase'
-  args: ['deploy']
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone', 'https://github.com/GoogleCloudPlatform/cloud-builders']
+  env: ['PROJECT_ROOT=muzivend']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/my-project-id/ionic-app', '.']
