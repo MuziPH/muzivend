@@ -2,7 +2,7 @@ vversion: 2
   jobs:
     build:
       docker:
-      - image: beevelop/ionic
+      - image: muzi17/ionicvend
       steps:
       - checkout
       - run:
