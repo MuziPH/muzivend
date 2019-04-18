@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { AngularFireModule } from 'angularfire2';
-import {environment} from '../environments/environment';
+import {environment} from '../environments/environment.prod';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { MatTableModule} from '@angular/material';
