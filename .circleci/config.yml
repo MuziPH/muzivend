@@ -24,8 +24,5 @@ jobs:
         name: Install node modules
         command: npm install
     - run:
-        name: Run unit tests
-        command: npx @capacitor/cli test
-    - run:
         name: Building web
         command: ionic build browser --prod
