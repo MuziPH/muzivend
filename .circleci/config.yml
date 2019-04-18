@@ -25,4 +25,4 @@ jobs:
         command: npm install
     - run:
         name: Building web
-        command: ionic build browser --prod
+        command: ionic build browser
